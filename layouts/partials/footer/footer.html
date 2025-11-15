@@ -1,5 +1,5 @@
 {{- $ThemeVersion := "3.32.0" -}}
-<footer class="site-footer">
+{{/*  <footer class="site-footer">
     <section class="copyright">
         &copy; 
         {{ if and (.Site.Params.footer.since) (ne .Site.Params.footer.since (int (now.Format "2006"))) }}
@@ -20,4 +20,30 @@
         {{ T "footer.builtWith" (dict "Generator" $Generator) | safeHTML }} <br />
         {{ T "footer.designedBy" (dict "Theme" $Theme "DesignedBy" $DesignedBy) | safeHTML }}
     </section>
+</footer>  */}}
+<footer class="article-footer">
+    {{ partial "article/components/tags" . }}
+
+    {{ if and (.Site.Params.article.license.enabled) (not (eq .Params.license false)) }}
+    <section class="article-copyright">
+        {{ partial "helper/icon" "copyright" }}
+        <span>{{ default .Site.Params.article.license.default .Params.license | markdownify }}</span>
+    </section>
+    {{ end }}
+	
+	{{ if and (.Site.Params.article.edit.enabled) (not (eq .Params.edit false)) }}
+    <section class="article-edit">
+        {{ partial "helper/icon" "external-link" }}
+        <span><a style="color: inherit;" href="https://github.com/iwyang/iwyang.github.io/edit/main/content/{{ replace .File.Path "\\" "/" }}" target="_blank" rel="noopener noreferrer">在 GitHub 上编辑此页</a></span>
+    </section>
+    {{ end }}
+
+    {{- if ne .Lastmod .Date -}}
+    <section class="article-lastmod">
+        {{ partial "helper/icon" "clock" }}
+        <span>
+            {{ T "article.lastUpdatedOn" }} {{ .Lastmod.Format ( or .Site.Params.dateFormat.lastUpdated "Jan 02, 2006 15:04 MST" ) }}
+        </span>
+    </section>
+    {{- end -}}
 </footer>
