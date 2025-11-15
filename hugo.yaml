@@ -213,11 +213,11 @@ menu:
           params:
               icon: brand-github
 
-        - identifier: twitter
-          name: Twitter
-          url: https://twitter.com
+        - identifier: tik-tok
+          name: 抖音
+          url: https://v.douyin.com/KThP94omA-0/
           params:
-              icon: brand-twitter
+              icon: tiktok
 
 related:
     includeNewer: true
