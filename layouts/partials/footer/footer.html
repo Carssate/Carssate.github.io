@@ -1,5 +1,5 @@
 {{- $ThemeVersion := "3.32.0" -}}
-{{/*  <footer class="site-footer">
+<footer class="site-footer">
     <section class="copyright">
         &copy; 
         {{ if and (.Site.Params.footer.since) (ne .Site.Params.footer.since (int (now.Format "2006"))) }}
@@ -7,7 +7,21 @@
         {{ end }}
         {{ now.Format "2006" }} {{ default .Site.Title .Site.Copyright }}
     </section>
-    
+    <!-- Add blog running time -->
+    <section class="running-time">
+    本博客已稳定运行
+    <span id="runningdays" class="running-days"></span>
+    </section>
+    <!-- Add total page and word count time -->
+    <section class="totalcount">
+    {{$scratch := newScratch}}
+    {{ range (where .Site.Pages "Kind" "page" )}}
+        {{$scratch.Add "total" .WordCount}}
+    {{ end }}
+    发表了{{ len (where .Site.RegularPages "Section" "post") }}篇文章 · 
+    总计{{ div ($scratch.Get "total") 1000.0 | lang.FormatNumber 2 }}k字
+    </section>
+
     <section class="powerby">
         {{ with .Site.Params.footer.customText }}
             {{ . | safeHTML }} <br/>
@@ -20,67 +34,4 @@
         {{ T "footer.builtWith" (dict "Generator" $Generator) | safeHTML }} <br />
         {{ T "footer.designedBy" (dict "Theme" $Theme "DesignedBy" $DesignedBy) | safeHTML }}
     </section>
-</footer>  */}}
-{{/*  <footer class="article-footer">
-    {{ partial "article/components/tags" . }}
-
-    {{ if and (.Site.Params.article.license.enabled) (not (eq .Params.license false)) }}
-    <section class="article-copyright">
-        {{ partial "helper/icon" "copyright" }}
-        <span>{{ default .Site.Params.article.license.default .Params.license | markdownify }}</span>
-    </section>
-    {{ end }}
-	
-	{{ if and (.Site.Params.article.edit.enabled) (not (eq .Params.edit false)) }}
-    <section class="article-edit">
-        {{ partial "helper/icon" "external-link" }}
-        <span><a style="color: inherit;" href="https://github.com/iwyang/iwyang.github.io/edit/main/content/{{ replace .File.Path "\\" "/" }}" target="_blank" rel="noopener noreferrer">在 GitHub 上编辑此页</a></span>
-    </section>
-    {{ end }}
-
-    {{- if ne .Lastmod .Date -}}
-    <section class="article-lastmod">
-        {{ partial "helper/icon" "clock" }}
-        <span>
-            {{ T "article.lastUpdatedOn" }} {{ .Lastmod.Format ( or .Site.Params.dateFormat.lastUpdated "Jan 02, 2006 15:04 MST" ) }}
-        </span>
-    </section>
-    {{- end -}}
-</footer>  */}}
-<footer class="article-footer">
-    <!-- 调试信息 -->
-    <div style="background: #ffeb3b; padding: 10px; margin: 10px 0; border: 1px solid #ffc107;">
-        <strong>调试信息:</strong><br>
-        编辑功能启用: {{ .Site.Params.article.edit.enabled }}<br>
-        文章编辑设置: {{ .Params.edit }}<br>
-        File对象存在: {{ if .File }}是{{ else }}否{{ end }}<br>
-        {{ if .File }}
-        文件路径: {{ .File.Path }}<br>
-        完整URL: https://github.com/carssate/carssate.github.io/edit/main/content/{{ replace .File.Path "\\" "/" }}
-        {{ end }}
-    </div>
-
-    {{ partial "article/components/tags" . }}
-
-    {{ if and (.Site.Params.article.edit.enabled) (not (eq .Params.edit false)) }}
-        {{ if and .File (not .File.IsZero) }}
-        <section class="article-edit">
-            {{ partial "helper/icon" "edit" }}
-            <span><a style="color: inherit;" href="https://github.com/carssate/carssate.github.io/edit/main/content/{{ replace .File.Path "\\" "/" }}" target="_blank" rel="noopener noreferrer">在 GitHub 上编辑此页</a></span>
-        </section>
-        {{ else }}
-        <div style="color: red;">调试: File对象为空，编辑链接被隐藏</div>
-        {{ end }}
-    {{ else }}
-    <div style="color: red;">调试: 编辑功能被禁用</div>
-    {{ end }}
-
-    {{- if ne .Lastmod .Date -}}
-    <section class="article-lastmod">
-        {{ partial "helper/icon" "clock" }}
-        <span>
-            {{ T "article.lastUpdatedOn" }} {{ .Lastmod.Format ( or .Site.Params.dateFormat.lastUpdated "Jan 02, 2006 15:04 MST" ) }}
-        </span>
-    </section>
-    {{- end -}}
 </footer>
