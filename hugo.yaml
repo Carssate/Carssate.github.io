@@ -67,7 +67,7 @@ params:
             src: img/profile-photo.jpg
 
     article:
-        math: false
+        math: true
         toc: true
         readingTime: true
         wordCount: true

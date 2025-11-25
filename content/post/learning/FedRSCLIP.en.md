@@ -5,10 +5,7 @@ title: 'FedRSCLIP_Summary of Remote Sensing Image Classification Based on Federa
 image: '/images/FedRSCLIP.jpg'
 lastmod: '2025-11-13T14:48:47+08:00'
 categories: 
-        - Remote Sensing
-        - Vision-Language Model
-        - Federal Learning
-        - Heterogeneity
+        - AI Security
 tags: []
 description: ''
 summary: ''
